@@ -1,21 +1,25 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
+import os
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
 app = Flask(__name__)
-app.secret_key = "nexora-secret-key"
+app.secret_key = os.environ.get("SECRET_KEY", "nexora-local-development-only")
 
 
 # -------------------------
 # DATABASE CONNECTION
 # -------------------------
 
+
 def get_db_connection():
-    connection = sqlite3.connect("database.db")
+    db_path = os.environ.get("DATABASE_PATH", "database.db")
+    connection = sqlite3.connect(db_path)
     connection.row_factory = sqlite3.Row
     return connection
+
 
 
 # -------------------------
@@ -881,4 +885,4 @@ def my_preferences():
 # -------------------------
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
