@@ -1,0 +1,62 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ product["name"] }} | Nexora{% endblock %}
+
+{% block content %}
+
+<section class="product-details">
+
+    <div class="product-details-container">
+
+        <div class="product-details-image">
+
+            <img
+                src="{{ url_for('static', filename='images/' + product['image']) }}"
+                alt="{{ product['name'] }}"
+            >
+
+        </div>
+
+        <div class="product-details-info">
+
+            <span class="category">
+                {{ product["category"] }}
+            </span>
+
+            <h1>
+                {{ product["name"] }}
+            </h1>
+
+            <p class="product-details-description">
+                {{ product["description"] }}
+            </p>
+
+            <div class="product-details-price">
+                €{{ "%.2f"|format(product["price"]) }}
+            </div>
+
+            <!-- ADD TO CART -->
+
+            <form
+                method="POST"
+                action="{{ url_for('add_to_cart', product_id=product['id']) }}"
+            >
+
+                <button type="submit" class="product-buy-button">
+                    Add to Cart
+                </button>
+
+            </form>
+
+            <a href="{{ url_for('products') }}" class="back-link">
+                ← Back to all products
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

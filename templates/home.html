@@ -1,0 +1,135 @@
+
+{% extends "base.html" %}
+
+{% block title %}Nexora | Personalized Shopping{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="hero-label">PERSONALIZED FOR YOU</span>
+
+        <h1>
+            Find the tech
+            <span>made for you.</span>
+        </h1>
+
+        <p>
+            Discover products selected around your interests,
+            preferences and shopping behaviour.
+        </p>
+
+        <a href="{{ url_for('products') }}" class="explore-button">
+            Explore Now
+        </a>
+
+    </div>
+
+    <div class="hero-visual">
+        <img
+            src="{{ url_for('static', filename='images/hero-phone.png') }}"
+            alt="Nexora featured smartphone"
+            class="hero-product"
+        >
+    </div>
+
+</section>
+
+
+<!-- BENEFITS -->
+<section class="benefits">
+
+    <div>
+        <strong>Free Delivery</strong>
+        <span>On selected orders</span>
+    </div>
+
+    <div>
+        <strong>Secure Payments</strong>
+        <span>100% protected</span>
+    </div>
+
+    <div>
+        <strong>Easy Returns</strong>
+        <span>30-day return policy</span>
+    </div>
+
+    <div>
+        <strong>Smart Recommendations</strong>
+        <span>Personalized for you</span>
+    </div>
+
+</section>
+
+
+<!-- PERSONALIZED RECOMMENDATIONS -->
+<section class="section-container">
+
+    <div class="section-title">
+
+        <div>
+            <span class="eyebrow">CURATED FOR YOU</span>
+
+            <h2>Recommended for You</h2>
+
+            <p class="recommendation-reason">
+                Selected based on your interests in
+                {{ top_categories | join(', ') }}
+            </p>
+        </div>
+
+        <a href="{{ url_for('products') }}">
+            View All
+        </a>
+
+    </div>
+
+
+    <div class="product-grid">
+
+        {% for product in products %}
+
+        <a
+            href="{{ url_for('product_details', product_id=product['id']) }}"
+            class="product-card-link"
+        >
+
+            <div class="product-card">
+
+                <div class="product-image">
+                    <img
+                        src="{{ url_for('static', filename='images/' + product['image']) }}"
+                        alt="{{ product['name'] }}"
+                    >
+                </div>
+
+                <span class="category">
+                    {{ product['category'] }}
+                </span>
+
+                <h3>{{ product['name'] }}</h3>
+
+                <p>{{ product['description'] }}</p>
+
+                <strong>
+                    €{{ "%.2f"|format(product['price']) }}
+                </strong>
+
+                <div class="product-recommendation-reason">
+                    {{ product['reason'] }}
+                </div>
+
+            </div>
+
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

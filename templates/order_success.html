@@ -1,0 +1,29 @@
+
+{% extends "base.html" %}
+
+{% block title %}Order Confirmed | Nexora{% endblock %}
+
+{% block content %}
+
+<section class="order-success">
+
+    <div class="order-success-card">
+
+        <div class="success-icon">✓</div>
+
+        <h1>Order Confirmed!</h1>
+
+        <p>
+            Your order has been successfully placed.
+            Thank you for shopping with Nexora!
+        </p>
+
+        <a href="{{ url_for('home') }}" class="success-button">
+            Continue Shopping
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

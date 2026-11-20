@@ -1,0 +1,130 @@
+
+{% extends "base.html" %}
+
+{% block title %}My Preferences | Nexora{% endblock %}
+
+{% block content %}
+
+<section class="preferences-page">
+
+    <div class="preferences-heading">
+        <span class="eyebrow">PERSONALIZATION</span>
+
+        <h1>My Preferences</h1>
+
+        <p>
+            Discover how Nexora understands your interests
+            and personalizes your shopping experience.
+        </p>
+    </div>
+
+    <!-- USER PREFERENCES -->
+
+    <div class="preferences-card">
+
+        <h2>Hello, {{ user["name"] }}!</h2>
+
+        <p>
+            Your selected favorite category:
+            <strong>{{ preferred_category }}</strong>
+        </p>
+
+        <p>
+            Your current top interest:
+            <strong>{{ recommendation_category }}</strong>
+        </p>
+        <p>
+                Your personalized profile:
+                <strong>{{ user_stereotype }}</strong>
+        </p>
+
+    </div>
+
+    <!-- INTEREST SCORES -->
+
+    <div class="preferences-card">
+
+        <h2>Your Interest Scores</h2>
+
+        <p class="preferences-description">
+            Your scores are calculated from your selected
+            preferences, product views, and purchases.
+        </p>
+
+        {% for item in interest_bars %}
+
+        <div class="interest-item">
+
+            <div class="interest-label">
+                <span>{{ item.category }}</span>
+                <strong>{{ item.score }} pts</strong>
+            </div>
+
+            
+            <div class="interest-bar">
+                <div
+                    class="interest-bar-fill"
+                    data-percentage="{{ item.percentage }}"
+                ></div>
+            </div>
+
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- RECOMMENDATION EXPLANATION -->
+
+    <div class="preferences-card">
+
+        <h2>Why These Recommendations?</h2>
+
+        <p>
+            Nexora currently recommends products from
+            <strong>{{ recommendation_category }}</strong>
+            because this category has your highest
+            interest score.
+        </p>
+
+        <div class="scoring-rules">
+
+            <p>
+                Favorite category:
+                <strong>+2 points</strong>
+            </p>
+
+            <p>
+                Product view:
+                <strong>+1 point</strong>
+            </p>
+
+            <p>
+                Product purchase:
+                <strong>+3 points</strong>
+            </p>
+
+        </div>
+
+        <a
+            href="{{ url_for('home') }}"
+            class="preferences-button"
+        >
+            View My Recommendations
+        </a>
+
+    </div>
+
+</section>
+
+
+<script>
+    document.querySelectorAll(".interest-bar-fill").forEach(function(bar) {
+        const percentage = Number(bar.dataset.percentage);
+        bar.style.width = Math.max(0, Math.min(100, percentage)) + "%";
+    });
+</script>
+
+
+{% endblock %}

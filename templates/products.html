@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}All Products | Nexora{% endblock %}
+
+{% block content %}
+
+<section class="products-page">
+
+    <div class="products-page-header">
+
+        <span class="eyebrow">EXPLORE NEXORA</span>
+
+        <h1>All Products</h1>
+
+        <p>
+            Explore our products and discover the technology
+            that fits your lifestyle.
+        </p>
+
+    </div>
+
+
+    <!-- CATEGORY FILTERS -->
+
+    <div class="category-filters">
+
+        <a href="{{ url_for('products') }}" class="category-filter active">
+            All
+        </a>
+
+        <a href="{{ url_for('category_products', category='Smartphones') }}" class="category-filter">
+            Smartphones
+        </a>
+
+        <a href="{{ url_for('category_products', category='Accessories') }}" class="category-filter">
+            Accessories
+        </a>
+
+        <a href="{{ url_for('category_products', category='Tablets') }}" class="category-filter">
+            Tablets
+        </a>
+
+        <a href="{{ url_for('category_products', category='Audio') }}" class="category-filter">
+            Audio
+        </a>
+
+        <a href="{{ url_for('category_products', category='Wearables') }}" class="category-filter">
+            Wearables
+        </a>
+
+        <a href="{{ url_for('category_products', category='Gaming') }}" class="category-filter">
+            Gaming
+        </a>
+
+        <a href="{{ url_for('category_products', category='Computers') }}" class="category-filter">
+            Computers
+        </a>
+
+        <a href="{{ url_for('category_products', category='Storage') }}" class="category-filter">
+            Storage
+        </a>
+
+    </div>
+
+
+    <!-- PRODUCTS -->
+
+    <div class="product-grid">
+
+        {% for product in products %}
+
+        <a
+            href="{{ url_for('product_details', product_id=product['id']) }}"
+            class="product-card-link"
+        >
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="{{ url_for('static', filename='images/' + product['image']) }}"
+                        alt="{{ product['name'] }}"
+                    >
+
+                </div>
+
+                <span class="category">
+                    {{ product["category"] }}
+                </span>
+
+                <h3>
+                    {{ product["name"] }}
+                </h3>
+
+                <p>
+                    {{ product["description"] }}
+                </p>
+
+                <strong>
+                    €{{ "%.2f"|format(product["price"]) }}
+                </strong>
+
+            </div>
+
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

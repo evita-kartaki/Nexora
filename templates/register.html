@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Register | Nexora{% endblock %}
+
+{% block content %}
+
+<section class="auth-section">
+
+    <div class="auth-card">
+
+        <div class="auth-logo">NEXORA</div>
+
+        <h1>Create your account</h1>
+
+        <p class="auth-subtitle">
+            Join Nexora and get recommendations tailored to you.
+        </p>
+
+        {% if error %}
+            <div class="auth-error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+
+            <div class="form-group">
+                <label>Name</label>
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Your name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Create a password"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Age</label>
+                <input
+                    type="number"
+                    name="age"
+                    placeholder="Your age"
+                    min="13"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Favorite category</label>
+
+                <select name="preferred_category" required>
+                    <option value="">Choose a category</option>
+                    <option value="Smartphones">Smartphones</option>
+                    <option value="Audio">Audio</option>
+                    <option value="Wearables">Wearables</option>
+                    <option value="Tablets">Tablets</option>
+                    <option value="Computers">Computers</option>
+                    <option value="Gaming">Gaming</option>
+                    <option value="Accessories">Accessories</option>
+                    <option value="Storage">Storage</option>
+                </select>
+            </div>
+
+            <button type="submit" class="auth-button">
+                Create Account
+            </button>
+
+        </form>
+
+        <p class="auth-switch">
+            Already have an account?
+            <a href="{{ url_for('login') }}">Sign in</a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

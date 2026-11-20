@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Nexora{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header class="main-header">
+
+        <a href="{{ url_for('home') }}" class="logo">
+            NEXORA
+        </a>
+
+        
+        <nav id="main-nav">
+
+
+            <a href="{{ url_for('products') }}"
+            class="{% if request.endpoint == 'products' %}active-link{% endif %}">
+                All Products
+            </a>
+
+            <a href="{{ url_for('category_products', category='Smartphones') }}"
+            class="{% if request.endpoint == 'category_products' and request.view_args.get('category') == 'Smartphones' %}active-link{% endif %}">
+                Phones
+            </a>
+
+            <a href="{{ url_for('category_products', category='Accessories') }}"
+            class="{% if request.endpoint == 'category_products' and request.view_args.get('category') == 'Accessories' %}active-link{% endif %}">
+                Accessories
+            </a>
+
+            <a href="{{ url_for('category_products', category='Tablets') }}"
+            class="{% if request.endpoint == 'category_products' and request.view_args.get('category') == 'Tablets' %}active-link{% endif %}">
+                Tablets
+            </a>
+
+            <a href="{{ url_for('category_products', category='Audio') }}"
+            class="{% if request.endpoint == 'category_products' and request.view_args.get('category') == 'Audio' %}active-link{% endif %}">
+                Audio
+            </a>
+
+            <a href="{{ url_for('category_products', category='Wearables') }}"
+            class="{% if request.endpoint == 'category_products' and request.view_args.get('category') == 'Wearables' %}active-link{% endif %}">
+                Wearables
+            </a>
+
+            <a href="{{ url_for('category_products', category='Gaming') }}"
+            class="{% if request.endpoint == 'category_products' and request.view_args.get('category') == 'Gaming' %}active-link{% endif %}">
+                Gaming
+            </a>
+
+            {% if session.get("user_id") %}
+
+                <a href="{{ url_for('my_preferences') }}"
+                class="{% if request.endpoint == 'my_preferences' %}active-link{% endif %}">
+                    My Preferences
+                </a>
+
+                <a href="{{ url_for('purchase_history') }}"
+                class="{% if request.endpoint == 'purchase_history' %}active-link{% endif %}">
+                    My Orders
+                </a>
+
+                <span class="user-name">
+                    Hi, {{ session.get("user_name") }}
+                </span>
+
+                <a href="{{ url_for('logout') }}" class="logout-link">
+                    Logout
+                </a>
+
+            {% endif %}
+
+        </nav>
+
+
+        <div class="header-actions">
+
+            {% if session.get("user_id") %}
+
+            <a href="{{ url_for('cart') }}"
+               class="cart-link"
+               aria-label="Shopping cart">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+
+                {% if cart_count > 0 %}
+                    <span class="cart-count">
+                        {{ cart_count }}
+                    </span>
+                {% endif %}
+
+            </a>
+
+            {% endif %}
+
+            <button
+                class="menu-toggle"
+                id="menu-toggle"
+                type="button"
+                aria-label="Open menu"
+                aria-controls="main-nav"
+                aria-expanded="false"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+        </div>
+
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <script>
+        const menuToggle = document.getElementById("menu-toggle");
+        const mainNav = document.getElementById("main-nav");
+
+        menuToggle.addEventListener("click", function () {
+            const isOpen = mainNav.classList.toggle("active");
+
+            menuToggle.classList.toggle("active", isOpen);
+            menuToggle.setAttribute("aria-expanded", isOpen);
+        });
+    </script>
+
+</body>
+</html>
